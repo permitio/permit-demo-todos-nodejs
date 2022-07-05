@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  # the Permit.io PDP container caches the permissions state in your network,
+  # reducing latency for permission checks and increasing resiliency of the service.
+  permit-pdp:
+    image: permitio/pdp:latest
+    environment:
+      - PDP_API_KEY=${PERMIT_API_KEY}
+    ports:
+      - "8181:8181"
+      - "7766:7000"
+  # NOTE: the backend uses an sqllite file-based db for simplicity
+  todos-backend:
+    build: src/api-with-permit/
+    environment:
+      - PERMIT_API_KEY=${PERMIT_API_KEY}
+      - PERMIT_PDP_URL=http://permit-pdp:7000/
+      - PERMIT_DEBUG=true
+    ports:
+      - "8008:8008"
+    depends_on:
+      - permit-pdp
+  todos-frontend:
+    build: src/client/
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_BACKEND_URL=http://todos-backend:8008
+      - AUTH0_DOMAIN=${AUTH0_DOMAIN}
+      - AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+      - AUTH0_AUDIENCE=${AUTH0_AUDIENCE}
+    volumes:
+      - .env:/var/www/webapp/static/.env
+    ports:
+      - "3001:3001"
