@@ -99,7 +99,7 @@ export default async function requireAuthentication(app: express.Application) {
           // we sleep before continuing because there is a race condition
           // where the syncing of a new user triggered a policy update
           // but we might already query on it immediately.
-          setTimeout(next, 500);
+          setTimeout(next, 2000);
         })
         .catch(next);
     } else {
