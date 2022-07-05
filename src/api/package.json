@@ -1,0 +1,62 @@
+{
+  "name": "todoapp-node",
+  "version": "1.0.0",
+  "description": "todo app backend with node.js",
+  "main": "app.js",
+  "scripts": {
+    "stop": "lsof -ti :8008 | xargs kill",
+    "build": "npm run build-ts && npm run lint",
+    "build-ts": "tsc",
+    "dev": "npm run build && npm run watch-debug",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "serve": "node dist/app.js",
+    "serve-debug": "nodemon --inspect dist/app.js",
+    "start": "npm run build && npm run serve",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "watch-ts": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/permitio/todoapp-node.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "errorhandler": "1.5.1",
+    "express": "4.17.1",
+    "express-jwt": "6.0.0",
+    "express-session": "1.17.1",
+    "jsonwebtoken": "8.5.1",
+    "jwks-rsa": "^1.12.1",
+    "method-override": "3.0.0",
+    "methods": "1.1.2",
+    "morgan": "1.10.0",
+    "rookout": "^0.30.0",
+    "sequelize": "^6.12.0-beta.3",
+    "sqlite3": "^5.0.8",
+    "underscore": "1.12.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.9",
+    "@types/errorhandler": "^1.5.0",
+    "@types/express": "^4.17.11",
+    "@types/express-jwt": "^6.0.0",
+    "@types/express-session": "^1.17.3",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/method-override": "^0.0.31",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.22",
+    "@types/underscore": "^1.10.24",
+    "@types/validator": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.18.0",
+    "newman": "^5.2.1",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
