@@ -1,51 +1,54 @@
 <p  align="center">
- <img src="https://ibb.co/MD8XCB5" height=170 alt="Permit.io" border="0" />
+ <img src="https://i.ibb.co/zh8k46H/logo-square.png" height=170 alt="Permit.io" border="0">
 </p>
 <h1 align="center">
 Permit.io Demo (Todos)
 </h1>
 
-<h2 align="center">
-Easy permissions with Permit.io
-</h2>
-
-<span>
-<a href="https://permit-io.slack.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
-</a>
-</span>
-
-# What is Permit.io?
+# What's in this repo?
 
 Permit.io is the permissions infrastructure for the internet. A fullstack authorization solution enabling developers to bake-in access-control into their products within minutes and have them ready for future demands from customers and regulation.
 
-# What's in this repo?
+In this repo you'll find a demo todos application implemented in Node.js that uses permit.io to enforce permissions.
 
-A demo todos application implemented in Node.js that uses permit.io to enforce permissions.
+# How to run this app
 
-# Pre-requisites
+## 1. Prerequisites
 
 This app requires an Auth0 account (for authentication) and Permit.io account (for authorization).
 
-## Auth0 Account
-If you want to open your own Auth0 account (for authentication), [click here](https://auth0.com/signup).
+### Auth0 Account
+If you want to open your own Auth0 account (for authentication), [click here](https://auth0.com/signup). 
 
-By default the app will use an Auth0 account controlled by [permit.io](https://permit.io) so it's not mandatory.
+By default the app will use an Auth0 account controlled by Permit.io so it's not mandatory.
 
-## Permit.io Account
-You'll need to open your Permit.io account [here](https://app.permit.io).
+### Permit.io Account
+You'll need to:
+1) Open a free Permit.io account [here](https://app.permit.io).
+2) Complete the account setup, see video tutorial [here](https://docs.permit.io/tutorials/onboarding_demo).
+3) Get your [API Key](https://docs.permit.io/tutorials/quickstart) and save it to .env
 
-Complete the user onboarding as shown [here](https://docs.permit.io/tutorials/onboarding_demo) and then copy the Permit.io api key matching your dev environment, as shown [here](https://docs.permit.io/tutorials/quickstart).
+## 2. Install dependencies
+```
+make install
+```
 
-# Documentation
+## 3. Run the app without permissions enforced
+```
+make run
+```
 
-You can find our docs at [docs.permit.io](https://docs.permit.io).
+## 4. Run the app with permissions enforced
+```
+make run-with-permissions
+```
 
-# <a name="community"></a>Community
+# <a name="community"></a>Community and support
 
-[![Button][join-slack-link]][badge-slack-link] </br> [![Button][follow-twitter-link]][badge-twitter-link]
+- You can find our full documentation at [docs.permit.io](https://docs.permit.io).
+- You can join our [slack community][join-slack-link] for help.
 
-[join-slack-link]: https://i.ibb.co/wzrGHQL/Group-749.png
-[badge-slack-link]: https://bit.ly/permitioslack
-[follow-twitter-link]: https://i.ibb.co/YZwWJm7/Group-751.png
-[badge-twitter-link]: https://twitter.com/opal_ac
+[![Button][badge-slack-link]][join-slack-link]
+
+[badge-slack-link]: https://i.ibb.co/wzrGHQL/Group-749.png
+[join-slack-link]: https://bit.ly/permitioslack
