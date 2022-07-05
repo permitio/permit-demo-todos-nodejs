@@ -1,3 +1,8 @@
+install:
+	cd src/client && yarn
+	cd src/app && yarn
+	cd src/app-with-permit && yarn
+
 run:
 	docker compose --env-file .env up --force-recreate
 
