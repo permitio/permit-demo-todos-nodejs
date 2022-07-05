@@ -222,7 +222,7 @@ export default function Todolist({ tasks }) {
                 <MoreIcon />
               </Button>
 
-              <Button
+              {/* <Button
                 size='small'
                 onClick={() => {
                   setIsMenuOpen(false);
@@ -231,7 +231,7 @@ export default function Todolist({ tasks }) {
                 variant='contained'
               >
                 <ShareIcon />
-              </Button>
+              </Button> */}
             </ButtonGroup>
 
             <Menu
