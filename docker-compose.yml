@@ -5,7 +5,6 @@ services:
     build: src/api/
     environment:
       - NODE_ENV=production
-      - PERMIT_API_KEY=${PERMIT_API_KEY}
     ports:
       - "8008:8008"
   todos-frontend:
