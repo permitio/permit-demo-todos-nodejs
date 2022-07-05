@@ -54,17 +54,6 @@ router.get("", async function (req, res, next) {
 router.post("", async function (req, res, next) {
   // permissions check
 
-  // NOTE: special case! with RBAC, all objects must live inside
-  // a tenant, and since each board is also a tenant, we don't know
-  // the tenant id when listing or creating boards/tenants.
-
-  // lucky for us - the RBAC policy allows anyone to create a tenant
-  const permitted = await permit.check(req.activeUser?.id, "create", "tenant");
-  if (!permitted) {
-    res.status(403).send("Forbidden: not allowed by policy!");
-    return;
-  }
-
   // "validation"
   if (!req.body.title) {
     return res.status(422).json({ errors: { title: "can't be blank" } });
