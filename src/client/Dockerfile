@@ -31,7 +31,6 @@ EXPOSE 3001
 WORKDIR /var/www/webapp/static
 # Make runtime environments available on react app
 COPY ./get_runtime_env_vars.sh .
-COPY .env .
 # Make our shell script executable
 RUN chmod +x get_runtime_env_vars.sh
 
