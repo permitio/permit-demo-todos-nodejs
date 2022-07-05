@@ -26,7 +26,10 @@ By default the app will use an Auth0 account controlled by Permit.io so it's not
 You'll need to:
 1) Open a free Permit.io account [here](https://app.permit.io).
 2) Complete the account setup, see video tutorial [here](https://docs.permit.io/tutorials/onboarding_demo).
-3) Get your [API Key](https://docs.permit.io/tutorials/quickstart) and save it to .env
+3) Get your [API Key](https://docs.permit.io/tutorials/quickstart) and save it to `.env` (set the value of `PERMIT_API_KEY`)
+
+#### NOTE: Securely storing secrets
+This repo is using `.env` for easy learning. Never store your secrets locally in your repo (i.e: in `.env` or any other file), the "secrets" you see here are auth0 parameters that are public and are usually embedded into frontend applications. You should **never** commit the Permit API key to a repo, always use a secrets storage solution like Hashicorp Vault or AWS Secrets Manager.
 
 ## 2. Install dependencies
 ```
