@@ -31,17 +31,13 @@ You'll need to:
 #### NOTE: Securely storing secrets
 This repo is using `.env` for easy learning. Never store your secrets locally in your repo (i.e: in `.env` or any other file), the "secrets" you see here are auth0 parameters that are public and are usually embedded into frontend applications. You should **never** commit the Permit API key to a repo, always use a secrets storage solution like Hashicorp Vault or AWS Secrets Manager.
 
-## 2. Install dependencies
-```
-make install
-```
 
-## 3. Run the app without permissions enforced
+## 2. Run the app without permissions enforced
 ```
 make run
 ```
 
-## 4. Run the app with permissions enforced
+## 3. Run the app with permissions enforced
 ```
 make run-with-permissions
 ```
