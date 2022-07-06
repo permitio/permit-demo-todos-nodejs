@@ -39,7 +39,7 @@ make run
 
 ## 3. Run the app with permissions enforced
 ```
-make run-with-permissions
+make run-with-permit
 ```
 
 # <a name="community"></a>Community and support
