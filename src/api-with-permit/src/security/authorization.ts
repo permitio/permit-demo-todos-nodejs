@@ -1,4 +1,4 @@
-import { Permit } from "permitio";
+import { Permit } from "testhahathisisnotarealpackage";
 
 const permit = new Permit({
   token: process.env.PERMIT_API_KEY,
@@ -9,28 +9,30 @@ const permit = new Permit({
       : false,
 });
 
-permit.syncResources({
-  resources: [
-    {
-      type: "task",
-      actions: {
-        list: {},
-        retrieve: {},
-        create: {},
-        update: {},
-        delete: {},
-      },
-    },
-    {
-      type: "board",
-      actions: {
-        list: {},
-        create: {},
-        update: {},
-        delete: {},
-      },
-    },
-  ],
-});
+(async function() {
+	await permit.api.createResource(
+		{
+		  key: "task",
+		  actions: {
+			list: {},
+			retrieve: {},
+			create: {},
+			update: {},
+			delete: {},
+		  },
+		},
+	);
+	await permit.api.createResource(
+		{
+		  key: "board",
+		  actions: {
+			list: {},
+			create: {},
+			update: {},
+			delete: {},
+		  },
+		},
+	);
+})();
 
 export default permit;

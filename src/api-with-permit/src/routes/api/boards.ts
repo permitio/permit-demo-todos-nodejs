@@ -41,7 +41,7 @@ router.get("", async function (req, res, next) {
   // the tenant id when listing or creating boards/tenants.
 
   // what we can do, is to filter only on the tenants we own.
-  const tenants = await permit.cache.getUserTenants(user.id);
+  const tenants = ["default"];
   // the tenant ids are also the board ids so we
   // can filter all the boards with matching ids
   BoardService.getAllByIds(tenants)
@@ -70,12 +70,10 @@ router.post("", async function (req, res, next) {
     // the board must be put inside a tenant and the acting user must be assigned
     // with a role on the new tenant.
     const tenantKey = board.id;
-    const [tenant, role] = await permit.write(
-      // create a tenant that will contain the new board
-      permit.api.createTenant({ key: tenantKey, name: boardData.title }),
-      // assign an admin role to the current user on the new tenant
-      permit.api.assignRole(req.activeUser?.id, "admin", tenantKey)
-    );
+    // create a tenant that will contain the new board
+    const tenant = await permit.api.createTenant({ key: tenantKey, name: boardData.title });
+    // assign an admin role to the current user on the new tenant
+    const role = await permit.api.assignRole({user: req.activeUser?.id, role: "admin", tenant: tenantKey});
 
     // this is not mandatory - it's just for bookeeping
     await BoardService.update(board.id, { tenantId: tenant.id });
@@ -116,7 +114,7 @@ router.put("/:boardId", async function (req, res, next) {
         return res.status(404).send("board not found!");
       } else {
         permit
-          .write(permit.api.updateTenant({ key: board.id, name: update.title }))
+          .api.updateTenant(board.id, { name: update.title })
           .then(() => {
             return res.json(board.toJSON());
           });
@@ -147,7 +145,7 @@ router.delete("/:boardId", async function (req, res, next) {
 
   BoardService.remove(boardId)
     .then(() => {
-      permit.write(permit.api.deleteTenant(boardId)).then(() => {
+      permit.api.deleteTenant(boardId).then(() => {
         return res.sendStatus(204);
       });
     })
