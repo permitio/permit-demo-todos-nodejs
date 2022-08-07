@@ -5,18 +5,18 @@ services:
   permit-pdp:
     image: shaulpermit/sidecar-v2:latest
     environment:
-      - PDP_API_KEY=permit_key_TrWcNXFm4Tkld2V6dxg99HuDFtoHl9YWGUzQkLrvYSoIv0IIWmTugZkmuFiPhuTgTx7gvAusuDqdBeYJYHBDov
+      - PDP_API_KEY=${PERMIT_API_KEY}
       - PDP_REMOTE_CONFIG_ENDPOINT=/v2/pdps/me/config
-      - PDP_CONTROL_PLANE=https://api-v2-prod.permit.io
+#      - PDP_CONTROL_PLANE=${PDP_CONTROL_PLANE}
     ports:
-      - "8185:8181"
+      - "8181:8181"
       - "7766:7000"
-  # NOTE: the backend uses an sqllite file-based db for simplicity
   todos-backend:
     build: src/api-with-permit/
     environment:
       - PERMIT_API_KEY=${PERMIT_API_KEY}
       - PERMIT_PDP_URL=http://permit-pdp:7000/
+#      - PERMIT_API_URL=${PDP_CONTROL_PLANE}
       - PERMIT_DEBUG=true
     ports:
       - "8008:8008"

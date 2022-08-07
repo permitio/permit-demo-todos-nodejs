@@ -1,4 +1,4 @@
-import { Permit } from "testhahathisisnotarealpackage";
+import { Permit } from "testhahathisisnotarealpackage2";
 
 const permit = new Permit({
   token: process.env.PERMIT_API_KEY,
@@ -36,6 +36,29 @@ const permit = new Permit({
           update: {name: "Update"},
           delete: {name: "Delete"},
         },
+      },
+    );
+  } catch (e) {
+    if (e.response.status != 409) {
+      throw e;
+    }
+  }
+  try {
+    await permit.api.createRole(
+      {
+        key: "admin",
+        name: "admin",
+        permissions: [
+          "task:list",
+          "task:retrieve",
+          "task:create",
+          "task:update",
+          "task:delete",
+          "board:list",
+          "board:create",
+          "board:update",
+          "board:delete",
+        ],
       },
     );
   } catch (e) {

@@ -87,19 +87,30 @@ export class UserService {
       // We use the db user id (uuid) instead of auth0 user id.
       // The benefit is that if we reset our db, the auth0 id will not change
       // but we will still sync the user correctly to the permissions system.
-      key: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      key: "demo-" + user.id,
+      first_name: user.firstName,
+      last_name: user.lastName,
       email: user.email,
-      roles: [
-        {
-          role: "admin",
-        },
-      ],
     };
 
     // sync the user and save its id in the permission system in the local db
-    const [permitUser] = await permit.api.createUser(userData);
+    let permitUser;
+    try {
+      permitUser = (await permit.api.createUser(userData))[0];
+    }
+    catch (e) {
+      if (e.response.status != 409) {
+        throw e;
+      }
+      permitUser = await permit.api.getUser("demo-" + user.id);
+    }
+    try {
+      await permit.api.assignRole({user: "demo-" + user.id, role: "admin", tenant: board.id });
+    } catch (e) {
+      if (e.response.status != 409) {
+        throw e;
+      }
+    }
     await UserService.update(user.id, { permissionsUserId: permitUser.id });
   }
 }
