@@ -41,7 +41,8 @@ router.get("", async function (req, res, next) {
   // the tenant id when listing or creating boards/tenants.
 
   // what we can do, is to filter only on the tenants we own.
-  const tenants = ["default"];
+  const tenants = (await permit.api.listTenants()).map((tenant) => tenant.key);
+
   // the tenant ids are also the board ids so we
   // can filter all the boards with matching ids
   BoardService.getAllByIds(tenants)
@@ -66,7 +67,7 @@ router.post("", async function (req, res, next) {
   try {
     const board = await BoardService.create(boardData);
 
-    // by creating a new board we are mutating state that affect permissions
+    // By creating a new board we are mutating state that affect permissions
     // the board must be put inside a tenant and the acting user must be assigned
     // with a role on the new tenant.
     const tenantKey = board.id;
@@ -100,7 +101,7 @@ router.put("/:boardId", async function (req, res, next) {
     return;
   }
 
-  // TODO: once we have relations, we can simply run:
+  // TODO: Once we have relations, we can simply run:
   // const permitted = await permit.check(req.activeUser?.id, "update", `board:${boardId}`);
 
   const update: IBoardUpdate = {};
@@ -124,13 +125,6 @@ router.put("/:boardId", async function (req, res, next) {
 });
 
 router.delete("/:boardId", async function (req, res, next) {
-  // is allowed check
-  // const allowed = await isAllowed(req, "delete", "tenant");
-  // if (!allowed) {
-  //   res.status(403).send("Forbidden: not allowed by policy!");
-  //   return;
-  // }
-
   const boardId = req.params.boardId;
 
   // permissions check

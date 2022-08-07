@@ -1,5 +1,4 @@
 import { Task, Board, User } from "./models";
-import { UserCreate } from "testhahathisisnotarealpackage";
 import permit from "./security/authorization";
 
 interface Dictionary<T> {
@@ -74,7 +73,7 @@ export class UserService {
 
     // create a tenant in which we place this board
     // in this way we can implement multi-tenancy
-    const [tenant] = await permit.api.createTenant({ key: board.id, name: title });
+    const tenant = await permit.api.createTenant({ key: board.id, name: title });
 
     // update the board with the tenant id
     await BoardService.update(board.id, { tenantId: tenant.id });
@@ -83,7 +82,7 @@ export class UserService {
     // await api.assignRole(userId, "Admin", tenantId);
 
     // sync the user with permissions service
-    const userData: UserCreate = {
+    const userData = {
       // NOTE:
       // We use the db user id (uuid) instead of auth0 user id.
       // The benefit is that if we reset our db, the auth0 id will not change
