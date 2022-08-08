@@ -70,11 +70,11 @@ router.post("", async function (req, res, next) {
     // By creating a new board we are mutating state that affect permissions
     // the board must be put inside a tenant and the acting user must be assigned
     // with a role on the new tenant.
-    const tenantKey = board.id;
+    const tenantKey = "demo-" + board.id;
     // create a tenant that will contain the new board
     const tenant = await permit.api.createTenant({ key: tenantKey, name: boardData.title });
     // assign an admin role to the current user on the new tenant
-    const role = await permit.api.assignRole({user: req.activeUser?.id, role: "admin", tenant: tenantKey});
+    const role = await permit.api.assignRole({user: "demo-" + req.activeUser?.id, role: "admin", tenant: tenantKey});
 
     // this is not mandatory - it's just for bookeeping
     await BoardService.update(board.id, { tenantId: tenant.id });
@@ -92,9 +92,9 @@ router.put("/:boardId", async function (req, res, next) {
   const boardId = req.params.boardId;
 
   // permissions check
-  const permitted = await permit.check(req.activeUser?.id, "update", {
+  const permitted = await permit.check("demo-" + req.activeUser?.id, "update", {
     type: "board",
-    tenant: boardId,
+    tenant: "demo-" + boardId,
   });
   if (!permitted) {
     res.status(403).send("Forbidden: not allowed by policy!");
@@ -128,9 +128,9 @@ router.delete("/:boardId", async function (req, res, next) {
   const boardId = req.params.boardId;
 
   // permissions check
-  const permitted = await permit.check(req.activeUser?.id, "delete", {
+  const permitted = await permit.check("demo-" + req.activeUser?.id, "delete", {
     type: "board",
-    tenant: boardId,
+    tenant: "demo-" + boardId,
   });
   if (!permitted) {
     res.status(403).send("Forbidden: not allowed by policy!");

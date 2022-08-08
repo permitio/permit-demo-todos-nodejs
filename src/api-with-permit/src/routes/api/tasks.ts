@@ -13,9 +13,9 @@ router.get(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check(req.activeUser?.id, "list", {
+    const permitted = await permit.check("demo-" + req.activeUser?.id, "list", {
       type: "task",
-      tenant: req.params.boardId,
+      tenant: "demo-" + req.params.boardId,
     });
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
@@ -41,9 +41,9 @@ router.get(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check(req.activeUser?.id, "retrieve", {
+    const permitted = await permit.check("demo-" + req.activeUser?.id, "retrieve", {
       type: "task",
-      tenant: req.params.boardId,
+      tenant: "demo-" + req.params.boardId,
     });
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
@@ -72,9 +72,9 @@ router.post(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check(req.activeUser?.id, "create", {
+    const permitted = await permit.check("demo-" + req.activeUser?.id, "create", {
       type: "task",
-      tenant: req.params.boardId,
+      tenant: "demo-" + req.params.boardId,
     });
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
@@ -106,9 +106,9 @@ router.put(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check(req.activeUser?.id, "update", {
+    const permitted = await permit.check("demo-" + req.activeUser?.id, "update", {
       type: "task",
-      tenant: req.params.boardId,
+      tenant: "demo-" + req.params.boardId,
     });
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
@@ -145,9 +145,9 @@ router.delete(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check(req.activeUser?.id, "delete", {
+    const permitted = await permit.check("demo-" + req.activeUser?.id, "delete", {
       type: "task",
-      tenant: req.params.boardId,
+      tenant: "demo-" + req.params.boardId,
     });
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");

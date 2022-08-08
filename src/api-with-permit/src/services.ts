@@ -73,10 +73,10 @@ export class UserService {
 
     // create a tenant in which we place this board
     // in this way we can implement multi-tenancy
-    const tenant = await permit.api.createTenant({ key: board.id, name: title });
+    const tenant = await permit.api.createTenant({ key: "demo-" + board.id, name: title });
 
     // update the board with the tenant id
-    await BoardService.update(board.id, { tenantId: tenant.id });
+    await BoardService.update(board.id, { tenantId: "demo-" + tenant.id });
 
     // await api.createTenant({ key: tenantId, name: tenantName });
     // await api.assignRole(userId, "Admin", tenantId);
@@ -105,7 +105,7 @@ export class UserService {
       permitUser = await permit.api.getUser("demo-" + user.id);
     }
     try {
-      await permit.api.assignRole({user: "demo-" + user.id, role: "admin", tenant: board.id });
+      await permit.api.assignRole({user: "demo-" + user.id, role: "admin", tenant: "demo-" + board.id });
     } catch (e) {
       if (e.response.status != 409) {
         throw e;
