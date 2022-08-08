@@ -68,12 +68,15 @@ export class UserService {
 
   static async syncUserPermissions(user: User): Promise<void> {
     // create the first board for the user
-    const title = "My First Todo List";
+    const title = "My 1st Todo List";
     const board = await BoardService.create({ title: title });
 
     // create a tenant in which we place this board
     // in this way we can implement multi-tenancy
-    const tenant = await permit.api.createTenant({ key: "demo-" + board.id, name: title });
+    const tenant = await permit.api.createTenant({
+      key: "demo-" + board.id,
+      name: title,
+    });
 
     // update the board with the tenant id
     await BoardService.update(board.id, { tenantId: "demo-" + tenant.id });
@@ -97,15 +100,18 @@ export class UserService {
     let permitUser;
     try {
       permitUser = (await permit.api.createUser(userData))[0];
-    }
-    catch (e) {
+    } catch (e) {
       if (e.response.status != 409) {
         throw e;
       }
       permitUser = await permit.api.getUser("demo-" + user.id);
     }
     try {
-      await permit.api.assignRole({user: "demo-" + user.id, role: "admin", tenant: "demo-" + board.id });
+      await permit.api.assignRole({
+        user: "demo-" + user.id,
+        role: "admin",
+        tenant: "demo-" + board.id,
+      });
     } catch (e) {
       if (e.response.status != 409) {
         throw e;

@@ -41,11 +41,17 @@ router.get("", async function (req, res, next) {
   // the tenant id when listing or creating boards/tenants.
 
   // what we can do, is to filter only on the tenants we own.
-  const tenants = (await permit.api.listTenants()).map((tenant) => tenant.key);
+  const tenants = (await permit.api.getAssignedRoles("demo-" + user.id)).map(
+    (ra) => ra.tenant
+  );
+
+  const boardIds = tenants.map((tenantId) =>
+    tenantId.substring("demo-".length)
+  );
 
   // the tenant ids are also the board ids so we
   // can filter all the boards with matching ids
-  BoardService.getAllByIds(tenants)
+  BoardService.getAllByIds(boardIds)
     .then((boards) => {
       return res.json(boards.map((b) => b.toJSON()));
     })
@@ -72,9 +78,16 @@ router.post("", async function (req, res, next) {
     // with a role on the new tenant.
     const tenantKey = "demo-" + board.id;
     // create a tenant that will contain the new board
-    const tenant = await permit.api.createTenant({ key: tenantKey, name: boardData.title });
+    const tenant = await permit.api.createTenant({
+      key: tenantKey,
+      name: boardData.title,
+    });
     // assign an admin role to the current user on the new tenant
-    const role = await permit.api.assignRole({user: "demo-" + req.activeUser?.id, role: "admin", tenant: tenantKey});
+    const role = await permit.api.assignRole({
+      user: "demo-" + req.activeUser?.id,
+      role: "admin",
+      tenant: tenantKey,
+    });
 
     // this is not mandatory - it's just for bookeeping
     await BoardService.update(board.id, { tenantId: tenant.id });
@@ -102,7 +115,7 @@ router.put("/:boardId", async function (req, res, next) {
   }
 
   // TODO: Once we have relations, we can simply run:
-  // const permitted = await permit.check(req.activeUser?.id, "update", `board:${boardId}`);
+  // const permitted = await permit.check("demo-"+req.activeUser?.id, "update", `board:${boardId}`);
 
   const update: IBoardUpdate = {};
   if (req.body.title) {
@@ -114,8 +127,8 @@ router.put("/:boardId", async function (req, res, next) {
       if (board === null) {
         return res.status(404).send("board not found!");
       } else {
-        permit
-          .api.updateTenant(board.id, { name: update.title })
+        permit.api
+          .updateTenant("demo-" + boardId, { name: update.title })
           .then(() => {
             return res.json(board.toJSON());
           });
@@ -139,7 +152,7 @@ router.delete("/:boardId", async function (req, res, next) {
 
   BoardService.remove(boardId)
     .then(() => {
-      permit.api.deleteTenant(boardId).then(() => {
+      permit.api.deleteTenant("demo-" + boardId).then(() => {
         return res.sendStatus(204);
       });
     })

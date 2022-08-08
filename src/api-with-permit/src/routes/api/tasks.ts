@@ -41,16 +41,20 @@ router.get(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check("demo-" + req.activeUser?.id, "retrieve", {
-      type: "task",
-      tenant: "demo-" + req.params.boardId,
-    });
+    const permitted = await permit.check(
+      "demo-" + req.activeUser?.id,
+      "retrieve",
+      {
+        type: "task",
+        tenant: "demo-" + req.params.boardId,
+      }
+    );
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
       return;
     }
     // TODO: single tenant mode
-    // const permitted = await permit.check(req.activeUser?.id, "retrieve", "task");
+    // const permitted = await permit.check("demo-"+req.activeUser?.id, "retrieve", "task");
 
     const taskId = req.params.taskId;
     TaskService.get(taskId, req.board.id)
@@ -72,10 +76,14 @@ router.post(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check("demo-" + req.activeUser?.id, "create", {
-      type: "task",
-      tenant: "demo-" + req.params.boardId,
-    });
+    const permitted = await permit.check(
+      "demo-" + req.activeUser?.id,
+      "create",
+      {
+        type: "task",
+        tenant: "demo-" + req.params.boardId,
+      }
+    );
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
       return;
@@ -106,10 +114,14 @@ router.put(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check("demo-" + req.activeUser?.id, "update", {
-      type: "task",
-      tenant: "demo-" + req.params.boardId,
-    });
+    const permitted = await permit.check(
+      "demo-" + req.activeUser?.id,
+      "update",
+      {
+        type: "task",
+        tenant: "demo-" + req.params.boardId,
+      }
+    );
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
       return;
@@ -145,10 +157,14 @@ router.delete(
     next: express.NextFunction
   ) {
     // permissions check
-    const permitted = await permit.check("demo-" + req.activeUser?.id, "delete", {
-      type: "task",
-      tenant: "demo-" + req.params.boardId,
-    });
+    const permitted = await permit.check(
+      "demo-" + req.activeUser?.id,
+      "delete",
+      {
+        type: "task",
+        tenant: "demo-" + req.params.boardId,
+      }
+    );
     if (!permitted) {
       res.status(403).send("Forbidden: not allowed by policy!");
       return;
