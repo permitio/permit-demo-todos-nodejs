@@ -3387,27 +3387,6 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rookout@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/rookout/-/rookout-0.30.0.tgz#f61de77d9718d889bd730051eb975d3d53a602e1"
-  integrity sha512-QRDvmtlsf19KjohYrHeE6aKwMqeX9gTwy9rCyIj2SfyCl1nCr8a/ETPWiUc6N17qbboClAQ6ehOpNELgF3k/Rg==
-  dependencies:
-    buffer-from "^1.1.1"
-    crc "^3.8.0"
-    crypto-js "3.2.1"
-    getos "^3.1.1"
-    google-protobuf "^3.8.0"
-    https-proxy-agent "^3.0.0"
-    ip "^1.1.5"
-    lock "^1.1.0"
-    lodash "^4.17.21"
-    lru-cache "^6.0.0"
-    source-map "^0.6.1"
-    source-map-resolve "^0.5.1"
-    source-map-support "^0.5.0"
-    uuid "^3.3.2"
-    ws "^7.4.6"
-
 run-parallel@^1.1.9:
   version "1.1.10"
   resolved "https://registry.npmjs.org/run-parallel/-/run-parallel-1.1.10.tgz"
