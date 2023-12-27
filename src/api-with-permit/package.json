@@ -21,7 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.3",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
     "errorhandler": "1.5.1",
