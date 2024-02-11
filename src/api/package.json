@@ -34,7 +34,7 @@
     "methods": "1.1.2",
     "morgan": "1.10.0",
     "sequelize": "^6.12.0-beta.3",
-    "sqlite3": "^5.0.8",
+    "sqlite3": "^5.1.7",
     "underscore": "1.12.0"
   },
   "devDependencies": {
